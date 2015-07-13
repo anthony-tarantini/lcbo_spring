@@ -1,0 +1,52 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.2.5.RELEASE")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'spring-boot'
+
+jar {
+    baseName = 'lcbo_spring_boot'
+    version =  '0.1.0'
+}
+
+repositories {
+    mavenCentral()
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {
+    compile("org.springframework:spring-web")
+    compile("org.springframework.hateoas:spring-hateoas")
+    compile("org.springframework.boot:spring-boot-starter")
+    compile("org.springframework.boot:spring-boot-starter-web") {
+        exclude module: "spring-boot-starter-tomcat"
+    }
+    compile("org.springframework.boot:spring-boot-starter-jetty")
+    compile("org.springframework.boot:spring-boot-starter-actuator")
+    compile("org.springframework.plugin:spring-plugin-core:1.1.0.RELEASE")
+
+    compile("joda-time:joda-time:2.3")
+    compile("org.projectlombok:lombok:1.16.2")
+    compile("com.jayway.jsonpath:json-path:0.9.1")
+    compile("org.apache.commons:commons-lang3:3.0")
+    compile("com.fasterxml.jackson.core:jackson-databind")
+
+    testCompile("junit:junit")
+    testCompile("org.mockito:mockito-core:1.+")
+    testCompile("org.assertj:assertj-core:3.1.0")
+    testCompile("org.springframework.boot:spring-boot-starter-test")
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.3'
+}

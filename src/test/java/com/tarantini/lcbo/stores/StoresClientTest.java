@@ -1,61 +1,62 @@
 package com.tarantini.lcbo.stores;
 
-import com.tarantini.lcbo.LcboResponse;
+import com.tarantini.lcbo.domain.lcbo.LcboResponse;
+import com.tarantini.lcbo.domain.lcbo.LcboStore;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
+import static org.mockito.MockitoAnnotations.initMocks;
 
 public class StoresClientTest {
     private StoresClient mStoresClient;
-    private RestTemplate mMockRestTemplate;
+    @Mock private RestTemplate mRestTemplate;
 
     @Before
     public void setup() {
-        mMockRestTemplate = mock(RestTemplate.class);
-        mStoresClient = new StoresClient(mMockRestTemplate);
+        initMocks(this);
+        mStoresClient = new StoresClient(mRestTemplate);
     }
 
     @Test
     public void getStores_makesCall() {
-        final LcboResponse<LcboStore[]> lcboResponse = new LcboResponse<LcboStore[]>();
-        final LcboStore[] result = new LcboStore[0];
-        lcboResponse.setResult(result);
+        final LcboResponse<List<LcboStore>> lcboResponse = new LcboResponse<List<LcboStore>>();
         final ResponseEntity responseEntity = mock(ResponseEntity.class);
         doReturn(lcboResponse).when(responseEntity).getBody();
-        doReturn(responseEntity).when(mMockRestTemplate)
-                .exchange(anyString(), any(HttpMethod.class), any(HttpEntity.class), any(ParameterizedTypeReference.class));
+        doReturn(responseEntity).when(mRestTemplate)
+                .exchange(anyString(), any(HttpMethod.class), any(HttpEntity.class), any(ParameterizedTypeReference.class), anyInt());
 
-        final LcboStore[] storeForId = mStoresClient.getStores();
+        final LcboResponse<List<LcboStore>> storeForId = mStoresClient.getStores(1);
 
-        final ParameterizedTypeReference<LcboResponse<LcboStore[]>> responseType = new ParameterizedTypeReference<LcboResponse<LcboStore[]>>() {};
-        verify(mMockRestTemplate).exchange("http://lcboapi.com/stores", HttpMethod.GET, new HttpEntity(null), responseType);
-        assertThat(storeForId).isSameAs(result);
+        final ParameterizedTypeReference<LcboResponse<List<LcboStore>>> responseType = new ParameterizedTypeReference<LcboResponse<List<LcboStore>>>() {};
+        verify(mRestTemplate).exchange("http://lcboapi.com/stores?page={page}", HttpMethod.GET, new HttpEntity(null), responseType, 1);
+        assertThat(storeForId).isSameAs(lcboResponse);
     }
 
     @Test
     public void getStoreForId_makesCall() {
         final LcboResponse<LcboStore> lcboResponse = new LcboResponse<LcboStore>();
-        final LcboStore result = LcboStore.builder().build();
-        lcboResponse.setResult(result);
         final ResponseEntity responseEntity = mock(ResponseEntity.class);
         doReturn(lcboResponse).when(responseEntity).getBody();
-        doReturn(responseEntity).when(mMockRestTemplate)
+        doReturn(responseEntity).when(mRestTemplate)
                 .exchange(anyString(), any(HttpMethod.class), any(HttpEntity.class), any(ParameterizedTypeReference.class), anyInt());
 
-        final LcboStore storeForId = mStoresClient.getStoreForId(1234);
+        final LcboResponse storeForId = mStoresClient.getStoreForId(1234);
 
         final ParameterizedTypeReference<LcboResponse<LcboStore>> responseType = new ParameterizedTypeReference<LcboResponse<LcboStore>>() {};
-        verify(mMockRestTemplate).exchange("http://lcboapi.com/stores/{id}", HttpMethod.GET, new HttpEntity(null), responseType, 1234);
-        assertThat(storeForId).isSameAs(result);
+        verify(mRestTemplate).exchange("http://lcboapi.com/stores/{id}", HttpMethod.GET, new HttpEntity(null), responseType, 1234);
+        assertThat(storeForId).isSameAs(lcboResponse);
     }
 }

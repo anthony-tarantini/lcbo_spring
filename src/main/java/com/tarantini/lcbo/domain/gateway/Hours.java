@@ -1,11 +1,11 @@
-package com.tarantini.lcbo.stores;
+package com.tarantini.lcbo.domain.gateway;
 
 import lombok.Builder;
 import lombok.Data;
 
 @Data
 @Builder
-class Hours {
+public class Hours {
     private String sunday;
     private String monday;
     private String tuesday;

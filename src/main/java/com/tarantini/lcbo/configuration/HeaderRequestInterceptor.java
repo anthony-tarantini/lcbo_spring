@@ -1,4 +1,4 @@
-package com.tarantini.lcbo;
+package com.tarantini.lcbo.configuration;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpRequest;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 
 @Component
-class HeaderRequestInterceptor implements ClientHttpRequestInterceptor {
+public class HeaderRequestInterceptor implements ClientHttpRequestInterceptor {
     @Override
     public ClientHttpResponse intercept(
             final HttpRequest request,

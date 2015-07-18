@@ -1,4 +1,4 @@
-package com.tarantini.lcbo;
+package com.tarantini.lcbo.domain.lcbo;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
@@ -8,6 +8,6 @@ import lombok.Data;
 public class LcboResponse<T> {
     private int status;
     private String message;
-    private Pager pager;
+    private LcboPager lcboPager;
     private T result;
 }

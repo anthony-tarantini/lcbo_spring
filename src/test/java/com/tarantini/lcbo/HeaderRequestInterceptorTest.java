@@ -1,8 +1,6 @@
 package com.tarantini.lcbo;
 
-import org.eclipse.jetty.http.HttpHeader;
-import org.junit.After;
-import org.junit.Before;
+import com.tarantini.lcbo.configuration.HeaderRequestInterceptor;
 import org.junit.Test;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpRequest;

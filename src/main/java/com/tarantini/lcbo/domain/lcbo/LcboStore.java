@@ -1,4 +1,4 @@
-package com.tarantini.lcbo.stores;
+package com.tarantini.lcbo.domain.lcbo;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-class LcboStore {
+public class LcboStore {
     private int id;
     @JsonProperty("is_dead")
     private boolean isDead;

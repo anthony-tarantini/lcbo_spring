@@ -1,13 +1,11 @@
 package com.tarantini.lcbo.stores;
 
+import com.tarantini.lcbo.domain.gateway.Store;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 class StoresController {
@@ -19,8 +17,8 @@ class StoresController {
     }
 
     @RequestMapping(value = "/stores", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public StoresResponse getStores(){
-        return new StoresResponse(mStoresService.getStores());
+    public StoresResponse getStores(@RequestParam(required = false, defaultValue = "1") final int page) {
+        return mStoresService.getStores(page);
     }
 
     @RequestMapping(value = "/stores/{storeId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -34,9 +32,4 @@ class StoresController {
         private Store store;
     }
 
-    @Data
-    @AllArgsConstructor
-    public static class StoresResponse {
-        private Store[] stores;
-    }
 }

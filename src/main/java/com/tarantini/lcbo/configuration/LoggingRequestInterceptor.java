@@ -1,4 +1,4 @@
-package com.tarantini.lcbo;
+package com.tarantini.lcbo.configuration;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 
 @Component
-class LoggingRequestInterceptor implements ClientHttpRequestInterceptor {
+public class LoggingRequestInterceptor implements ClientHttpRequestInterceptor {
     private static final Logger logger;
 
     static {

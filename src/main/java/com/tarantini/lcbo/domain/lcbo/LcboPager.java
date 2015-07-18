@@ -1,4 +1,4 @@
-package com.tarantini.lcbo;
+package com.tarantini.lcbo.domain.lcbo;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Pager {
+public class LcboPager {
     @JsonProperty("records_per_page")
     private int recordsPerPage;
     @JsonProperty("total_record_count")
@@ -18,15 +18,15 @@ public class Pager {
     @JsonProperty("is_final_page")
     private boolean isFinalPage;
     @JsonProperty("current_page")
-    private int currentPage;
+    private Integer currentPage;
     @JsonProperty("current_page_path")
     private String currentPagePath;
     @JsonProperty("next_page")
-    private int nextPage;
+    private Integer nextPage;
     @JsonProperty("next_page_path")
     private String nextPagePath;
     @JsonProperty("previous_page")
-    private int previousPage;
+    private Integer previousPage;
     @JsonProperty("previous_page_path")
     private String previousPagePath;
     @JsonProperty("total_pages")

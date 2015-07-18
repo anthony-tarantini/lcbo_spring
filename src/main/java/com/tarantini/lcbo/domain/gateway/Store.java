@@ -1,4 +1,4 @@
-package com.tarantini.lcbo.stores;
+package com.tarantini.lcbo.domain.gateway;
 
 import lombok.Builder;
 import lombok.Data;
@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 @Builder
-class Store {
+public class Store {
     private int storeId;
     private String name;
     private String addressLineOne;

@@ -1,31 +1,40 @@
 package com.tarantini.lcbo.stores;
 
+import com.tarantini.lcbo.domain.gateway.Hours;
+import com.tarantini.lcbo.domain.gateway.Store;
+import com.tarantini.lcbo.domain.lcbo.LcboResponse;
+import com.tarantini.lcbo.domain.lcbo.LcboStore;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+
 @Service
 class StoresService {
     private final StoresClient mStoresClient;
+    private final StoresLinker mStoresLinker;
 
     @Autowired
-    public StoresService(final StoresClient storesClient) {
+    public StoresService(final StoresClient storesClient, final StoresLinker storesLinker) {
         mStoresClient = storesClient;
+        mStoresLinker = storesLinker;
     }
 
-    public Store[] getStores() {
-        final LcboStore[] lcboStores = mStoresClient.getStores();
-        final Store[] stores = new Store[lcboStores.length];
-        for (int i = 0; i < lcboStores.length; i++) {
-            stores[i] = translateStore(lcboStores[i]);
-        }
-        return stores;
+    public StoresResponse getStores(final int page) {
+        final LcboResponse<List<LcboStore>> lcboResponse = mStoresClient.getStores(page);
+        final List<LcboStore> lcboStores = lcboResponse.getResult();
+        final StoresResponse storesResponse = new StoresResponse(lcboStores.stream().map(this::translateStore).collect(Collectors.toList()));
+        mStoresLinker.addPagerLinks(storesResponse, lcboResponse.getLcboPager());
+        return storesResponse;
     }
 
     public Store getStore(final int storeId) {
-        final LcboStore lcboStore = mStoresClient.getStoreForId(storeId);
-
-        return translateStore(lcboStore);
+        final LcboResponse<LcboStore> lcboResponse = mStoresClient.getStoreForId(storeId);
+        return translateStore(lcboResponse.getResult());
     }
 
     private Store translateStore(final LcboStore lcboStore) {

@@ -12,10 +12,14 @@ import java.io.IOException;
 
 @Component
 public class LoggingRequestInterceptor implements ClientHttpRequestInterceptor {
-    private static final Logger logger;
+    private static Logger sLogger;
 
     static {
-        logger = LoggerFactory.getLogger(LoggingRequestInterceptor.class);
+        sLogger = LoggerFactory.getLogger(LoggingRequestInterceptor.class);
+    }
+
+    public static void setLogger(final Logger logger) {
+        sLogger = logger;
     }
 
     @Override
@@ -25,17 +29,17 @@ public class LoggingRequestInterceptor implements ClientHttpRequestInterceptor {
             final ClientHttpRequestExecution execution
     ) throws IOException {
         final ClientHttpResponse response = execution.execute(request, body);
-        logger.info("-----------------------------------------------------");
-        logger.info("REQUEST:---------------------------------------------");
-        logger.info(request.getMethod().toString());
-        logger.info(request.getURI().toString());
-        logger.info(request.getHeaders().toString());
-        logger.info("-----------------------------------------------------");
-        logger.info("RESPONSE:--------------------------------------------");
-        logger.info(response.getHeaders().toString());
-        logger.info(response.getStatusCode().toString());
-        logger.info(response.getStatusText());
-        logger.info("-----------------------------------------------------");
+        sLogger.info("-----------------------------------------------------");
+        sLogger.info("REQUEST:---------------------------------------------");
+        sLogger.info(request.getMethod().toString());
+        sLogger.info(request.getURI().toString());
+        sLogger.info(request.getHeaders().toString());
+        sLogger.info("-----------------------------------------------------");
+        sLogger.info("RESPONSE:--------------------------------------------");
+        sLogger.info(response.getHeaders().toString());
+        sLogger.info(response.getStatusCode().toString());
+        sLogger.info(response.getStatusText());
+        sLogger.info("-----------------------------------------------------");
         return response;
     }
 }

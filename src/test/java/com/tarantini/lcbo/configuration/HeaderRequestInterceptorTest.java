@@ -1,4 +1,4 @@
-package com.tarantini.lcbo;
+package com.tarantini.lcbo.configuration;
 
 import com.tarantini.lcbo.configuration.HeaderRequestInterceptor;
 import org.junit.Test;
@@ -33,5 +33,4 @@ public class HeaderRequestInterceptorTest {
         verify(mockExecution).execute(mockRequest, body);
         assertThat(response).isSameAs(mockResponse);
     }
-
 }

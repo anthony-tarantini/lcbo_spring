@@ -17,7 +17,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -28,7 +27,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebAppConfiguration
 public class StoresControllerTest {
     private StoresController mStoresController;
-    @Mock private StoresService mMockStoresService;
+    @Mock
+    private StoresService mMockStoresService;
 
     @Before
     public void setup() {

@@ -22,7 +22,8 @@ class StoresClient {
     }
 
     public LcboResponse<List<LcboStore>> getStores(final int page) {
-        final ParameterizedTypeReference<LcboResponse<List<LcboStore>>> responseType = new ParameterizedTypeReference<LcboResponse<List<LcboStore>>>(){};
+        final ParameterizedTypeReference<LcboResponse<List<LcboStore>>> responseType = new ParameterizedTypeReference<LcboResponse<List<LcboStore>>>() {
+        };
 
         final ResponseEntity<LcboResponse<List<LcboStore>>> entity =
                 mRestTemplate.exchange("http://lcboapi.com/stores?page={page}", HttpMethod.GET, new HttpEntity(null), responseType, page);
@@ -31,7 +32,8 @@ class StoresClient {
     }
 
     public LcboResponse<LcboStore> getStoreForId(final int storeId) {
-        final ParameterizedTypeReference<LcboResponse<LcboStore>> responseType = new ParameterizedTypeReference<LcboResponse<LcboStore>>(){};
+        final ParameterizedTypeReference<LcboResponse<LcboStore>> responseType = new ParameterizedTypeReference<LcboResponse<LcboStore>>() {
+        };
 
         final ResponseEntity<LcboResponse<LcboStore>> entity =
                 mRestTemplate.exchange("http://lcboapi.com/stores/{id}", HttpMethod.GET, new HttpEntity(null), responseType, storeId);

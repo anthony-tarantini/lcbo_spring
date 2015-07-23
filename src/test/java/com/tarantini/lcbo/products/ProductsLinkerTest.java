@@ -1,4 +1,4 @@
-package com.tarantini.lcbo.stores;
+package com.tarantini.lcbo.products;
 
 import com.tarantini.lcbo.GatewayResponse;
 import org.junit.Test;
@@ -11,18 +11,18 @@ import static org.mockito.Mockito.verify;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
-public class StoresLinkerTest {
+public class ProductsLinkerTest {
 
     @Test
     public void createPagerLink() {
         final MockHttpServletRequest mockHttpServletRequest = new MockHttpServletRequest();
         RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(mockHttpServletRequest));
 
-        final StoresLinker storesLinker = new StoresLinker();
+        final ProductsLinker productsLinker = new ProductsLinker();
 
         final GatewayResponse response = mock(GatewayResponse.class);
-        storesLinker.createLinkToPage(response, 1, "test");
+        productsLinker.createLinkToPage(response, 1, "test");
 
-        verify(response).add(linkTo(methodOn(StoresController.class).getStores(1)).withRel("test"));
+        verify(response).add(linkTo(methodOn(ProductsController.class).getProducts(1)).withRel("test"));
     }
 }

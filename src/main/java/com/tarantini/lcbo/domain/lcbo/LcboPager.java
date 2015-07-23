@@ -1,11 +1,15 @@
 package com.tarantini.lcbo.domain.lcbo;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
-@JsonIgnoreProperties(ignoreUnknown = true)
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class LcboPager {
     @JsonProperty("records_per_page")
     private int recordsPerPage;

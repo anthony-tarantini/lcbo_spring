@@ -2,10 +2,10 @@ package com.tarantini.lcbo.configuration;
 
 import org.junit.Test;
 import org.slf4j.Logger;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.client.ClientHttpRequestExecution;
 import org.springframework.http.client.ClientHttpResponse;
 

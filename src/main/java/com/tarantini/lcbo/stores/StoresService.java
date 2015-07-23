@@ -11,8 +11,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
-
 @Service
 class StoresService {
     private final StoresClient mStoresClient;
@@ -26,8 +24,7 @@ class StoresService {
 
     public StoresResponse getStores(final int page) {
         final LcboResponse<List<LcboStore>> lcboResponse = mStoresClient.getStores(page);
-        final List<LcboStore> lcboStores = lcboResponse.getResult();
-        final StoresResponse storesResponse = new StoresResponse(lcboStores.stream().map(this::translateStore).collect(Collectors.toList()));
+        final StoresResponse storesResponse = new StoresResponse(lcboResponse.getResult().stream().map(this::translateStore).collect(Collectors.toList()));
         mStoresLinker.addPagerLinks(storesResponse, lcboResponse.getLcboPager());
         return storesResponse;
     }

@@ -15,15 +15,15 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 
 public class StoresServiceTest {
     private StoresService mStoresService;
-    @Mock private StoresClient mStoresClient;
-    @Mock private StoresLinker mStoresLinker;
+    @Mock
+    private StoresClient mStoresClient;
+    @Mock
+    private StoresLinker mStoresLinker;
 
     @Before
     public void setup() {
@@ -32,7 +32,7 @@ public class StoresServiceTest {
     }
 
     @Test
-    public void getStores(){
+    public void getStores() {
         final List<LcboStore> lcboStores = Arrays.asList(createLcboStore(1), createLcboStore(2));
         final LcboResponse<List<LcboStore>> response = new LcboResponse<List<LcboStore>>();
         response.setResult(lcboStores);
@@ -43,9 +43,9 @@ public class StoresServiceTest {
         response.setLcboPager(lcboPager);
         doReturn(response).when(mStoresClient).getStores(anyInt());
 
-        final StoresResponse storesResponse = mStoresService.getStores(0);
+        final StoresResponse storesResponse = mStoresService.getStores(1);
 
-        verify(mStoresClient).getStores(0);
+        verify(mStoresClient).getStores(1);
         verify(mStoresLinker).addPagerLinks(storesResponse, lcboPager);
         assertThat(storesResponse.getStores().get(0).getStoreId()).isEqualTo(1);
         assertThat(storesResponse.getStores().get(1).getStoreId()).isEqualTo(2);

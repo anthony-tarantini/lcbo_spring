@@ -14,15 +14,16 @@ import org.springframework.web.client.RestTemplate;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Matchers.*;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 public class StoresClientTest {
     private StoresClient mStoresClient;
-    @Mock private RestTemplate mRestTemplate;
+    @Mock
+    private RestTemplate mRestTemplate;
 
     @Before
     public void setup() {
@@ -38,11 +39,12 @@ public class StoresClientTest {
         doReturn(responseEntity).when(mRestTemplate)
                 .exchange(anyString(), any(HttpMethod.class), any(HttpEntity.class), any(ParameterizedTypeReference.class), anyInt());
 
-        final LcboResponse<List<LcboStore>> storeForId = mStoresClient.getStores(1);
+        final LcboResponse<List<LcboStore>> stores = mStoresClient.getStores(1);
 
-        final ParameterizedTypeReference<LcboResponse<List<LcboStore>>> responseType = new ParameterizedTypeReference<LcboResponse<List<LcboStore>>>() {};
+        final ParameterizedTypeReference<LcboResponse<List<LcboStore>>> responseType = new ParameterizedTypeReference<LcboResponse<List<LcboStore>>>() {
+        };
         verify(mRestTemplate).exchange("http://lcboapi.com/stores?page={page}", HttpMethod.GET, new HttpEntity(null), responseType, 1);
-        assertThat(storeForId).isSameAs(lcboResponse);
+        assertThat(stores).isSameAs(lcboResponse);
     }
 
     @Test
@@ -55,7 +57,8 @@ public class StoresClientTest {
 
         final LcboResponse storeForId = mStoresClient.getStoreForId(1234);
 
-        final ParameterizedTypeReference<LcboResponse<LcboStore>> responseType = new ParameterizedTypeReference<LcboResponse<LcboStore>>() {};
+        final ParameterizedTypeReference<LcboResponse<LcboStore>> responseType = new ParameterizedTypeReference<LcboResponse<LcboStore>>() {
+        };
         verify(mRestTemplate).exchange("http://lcboapi.com/stores/{id}", HttpMethod.GET, new HttpEntity(null), responseType, 1234);
         assertThat(storeForId).isSameAs(lcboResponse);
     }

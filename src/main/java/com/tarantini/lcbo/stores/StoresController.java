@@ -1,8 +1,5 @@
 package com.tarantini.lcbo.stores;
 
-import com.tarantini.lcbo.domain.gateway.Store;
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -25,11 +22,4 @@ class StoresController {
     public StoreResponse getStoreById(@PathVariable int storeId) {
         return new StoreResponse(mStoresService.getStore(storeId));
     }
-
-    @Data
-    @AllArgsConstructor
-    public static class StoreResponse {
-        private Store store;
-    }
-
 }

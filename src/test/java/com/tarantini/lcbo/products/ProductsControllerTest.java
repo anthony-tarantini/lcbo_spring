@@ -46,13 +46,34 @@ public class ProductsControllerTest {
     }
 
     @Test
-    public void getStoreById_passesThroughToService() {
+    public void getProducts_passesThroughToService() {
         final ProductsResponse expected = new ProductsResponse();
         doReturn(expected).when(mProductsService).getProducts(anyInt());
 
         final ProductsResponse response = mProductsController.getProducts(1);
 
         verify(mProductsService).getProducts(1);
+        assertThat(response).isSameAs(expected);
+    }
+
+    @Test
+    public void requestMapping_getProduct() throws Exception {
+        doReturn(new ProductResponse()).when(mProductsService).getProductById(anyInt());
+
+        final MockMvc mockMvc = MockMvcBuilders.standaloneSetup(mProductsController).build();
+        mockMvc.perform(MockMvcRequestBuilders.get("/products/123").accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+    }
+
+    @Test
+    public void getProductById_passesThroughToService() {
+        final ProductResponse expected = new ProductResponse();
+        doReturn(expected).when(mProductsService).getProductById(anyInt());
+
+        final ProductResponse response = mProductsController.getProductById(1);
+
+        verify(mProductsService).getProductById(1);
         assertThat(response).isSameAs(expected);
     }
 }

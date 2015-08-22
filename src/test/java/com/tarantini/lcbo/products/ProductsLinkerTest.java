@@ -1,7 +1,7 @@
 package com.tarantini.lcbo.products;
 
-import com.tarantini.lcbo.GatewayResponse;
 import org.junit.Test;
+import org.springframework.hateoas.ResourceSupport;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -20,7 +20,7 @@ public class ProductsLinkerTest {
 
         final ProductsLinker productsLinker = new ProductsLinker();
 
-        final GatewayResponse response = mock(GatewayResponse.class);
+        final ResourceSupport response = mock(ResourceSupport.class);
         productsLinker.createLinkToPage(response, 1, "test");
 
         verify(response).add(linkTo(methodOn(ProductsController.class).getProducts(1)).withRel("test"));

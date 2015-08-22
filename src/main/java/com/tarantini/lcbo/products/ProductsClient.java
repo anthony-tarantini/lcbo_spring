@@ -30,4 +30,14 @@ class ProductsClient {
 
         return entity.getBody();
     }
+
+    public LcboProduct getProductById(final int productId) {
+        final ParameterizedTypeReference<LcboResponse<LcboProduct>> responseType = new ParameterizedTypeReference<LcboResponse<LcboProduct>>() {
+        };
+
+        final ResponseEntity<LcboResponse<LcboProduct>> entity =
+                mRestTemplate.exchange("http://lcboapi.com/products/{productId}", HttpMethod.GET, new HttpEntity(null), responseType, productId);
+
+        return entity.getBody().getResult();
+    }
 }

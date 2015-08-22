@@ -31,7 +31,7 @@ public class ProductsClientTest {
     }
 
     @Test
-    public void getStores_makesCall() {
+    public void getProducts_makesCall() {
         final LcboResponse<List<LcboProduct>> lcboResponse = new LcboResponse<List<LcboProduct>>();
         final ResponseEntity responseEntity = mock(ResponseEntity.class);
         doReturn(lcboResponse).when(responseEntity).getBody();
@@ -46,4 +46,21 @@ public class ProductsClientTest {
         assertThat(products).isSameAs(lcboResponse);
     }
 
+    @Test
+    public void getProductById_makesCall() {
+        final LcboResponse<LcboProduct> lcboResponse = new LcboResponse<LcboProduct>();
+        final LcboProduct expected = new LcboProduct();
+        lcboResponse.setResult(expected);
+        final ResponseEntity responseEntity = mock(ResponseEntity.class);
+        doReturn(lcboResponse).when(responseEntity).getBody();
+        doReturn(responseEntity).when(mRestTemplate)
+                .exchange(anyString(), any(HttpMethod.class), any(HttpEntity.class), any(ParameterizedTypeReference.class), anyInt());
+
+        final LcboProduct product = mProductsClient.getProductById(1);
+
+        final ParameterizedTypeReference<LcboResponse<LcboProduct>> responseType = new ParameterizedTypeReference<LcboResponse<LcboProduct>>() {
+        };
+        verify(mRestTemplate).exchange("http://lcboapi.com/products/{productId}", HttpMethod.GET, new HttpEntity(null), responseType, 1);
+        assertThat(product).isSameAs(expected);
+    }
 }

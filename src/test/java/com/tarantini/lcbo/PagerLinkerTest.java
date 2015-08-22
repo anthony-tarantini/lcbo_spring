@@ -3,18 +3,19 @@ package com.tarantini.lcbo;
 import com.tarantini.lcbo.domain.lcbo.LcboPager;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.hateoas.ResourceSupport;
 
 import static org.mockito.Mockito.*;
 
 public class PagerLinkerTest {
 
     private TestPagerLinker mLinker;
-    private GatewayResponse mResponse;
+    private ResourceSupport mResponse;
 
     @Before
     public void setup() {
         mLinker = spy(new TestPagerLinker());
-        mResponse = mock(GatewayResponse.class);
+        mResponse = mock(ResourceSupport.class);
     }
 
     @Test
@@ -30,12 +31,12 @@ public class PagerLinkerTest {
     public void doesNotAddPageLinks_whenPagerIsHasNulls() {
         mLinker.addPagerLinks(mResponse, new LcboPager());
 
-        verify(mLinker, never()).createLinkToPage(any(GatewayResponse.class), any(Integer.class), anyString());
+        verify(mLinker, never()).createLinkToPage(any(ResourceSupport.class), any(Integer.class), anyString());
     }
 
     private static class TestPagerLinker extends PagerLinker {
         @Override
-        protected void createLinkToPage(final GatewayResponse response, final Integer page, final String rel) {
+        protected void createLinkToPage(final ResourceSupport response, final Integer page, final String rel) {
         }
     }
 }

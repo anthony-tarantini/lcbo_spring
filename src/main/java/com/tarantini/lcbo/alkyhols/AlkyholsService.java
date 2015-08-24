@@ -1,8 +1,8 @@
-package com.tarantini.lcbo.products;
+package com.tarantini.lcbo.alkyhols;
 
+import com.tarantini.lcbo.domain.gateway.Alkyhol;
 import com.tarantini.lcbo.domain.gateway.Container;
 import com.tarantini.lcbo.domain.gateway.Image;
-import com.tarantini.lcbo.domain.gateway.Product;
 import com.tarantini.lcbo.domain.lcbo.LcboProduct;
 import com.tarantini.lcbo.domain.lcbo.LcboResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,31 +12,31 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-class ProductsService {
+class AlkyholsService {
 
-    private final ProductsClient mProductsClient;
-    private final ProductsLinker mProductsLinker;
+    private final AlkyholsClient mAlkyholsClient;
+    private final AlkyholsLinker mAlkyholsLinker;
 
     @Autowired
-    public ProductsService(final ProductsClient productsClient, final ProductsLinker productsLinker) {
-        mProductsClient = productsClient;
-        mProductsLinker = productsLinker;
+    public AlkyholsService(final AlkyholsClient alkyholsClient, final AlkyholsLinker alkyholsLinker) {
+        mAlkyholsClient = alkyholsClient;
+        mAlkyholsLinker = alkyholsLinker;
     }
 
-    public ProductsResponse getProducts(final int page) {
-        final LcboResponse<List<LcboProduct>> lcboResponse = mProductsClient.getProducts(page);
-        final ProductsResponse gatewayResponse = new ProductsResponse(lcboResponse.getResult().stream().map(this::translateProduct).collect(Collectors.toList()));
-        mProductsLinker.addPagerLinks(gatewayResponse, lcboResponse.getLcboPager());
+    public AlkyholsResponse getAllAlkyhols(final int page) {
+        final LcboResponse<List<LcboProduct>> lcboResponse = mAlkyholsClient.getProducts(page);
+        final AlkyholsResponse gatewayResponse = new AlkyholsResponse(lcboResponse.getResult().stream().map(this::translateLcboProductToAlkyhol).collect(Collectors.toList()));
+        mAlkyholsLinker.addPagerLinks(gatewayResponse, lcboResponse.getLcboPager());
         return gatewayResponse;
     }
 
-    public ProductResponse getProductById(final int productId) {
-        final LcboProduct product = mProductsClient.getProductById(productId);
-        return ProductResponse.builder().product(translateProduct(product)).build();
+    public AlkyholResponse getAlkyholById(final int productId) {
+        final LcboProduct product = mAlkyholsClient.getProductById(productId);
+        return AlkyholResponse.builder().alkyhol(translateLcboProductToAlkyhol(product)).build();
     }
 
-    private Product translateProduct(final LcboProduct lcboProduct) {
-        return Product.builder()
+    private Alkyhol translateLcboProductToAlkyhol(final LcboProduct lcboProduct) {
+        return Alkyhol.builder()
                 .id(lcboProduct.getId())
                 .name(lcboProduct.getName())
                 .price(translatePrice(lcboProduct.getPriceInCents()))

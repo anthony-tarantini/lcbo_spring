@@ -1,11 +1,11 @@
-package com.tarantini.lcbo.products;
+package com.tarantini.lcbo.alkyhols;
 
-import com.tarantini.lcbo.domain.gateway.Product;
+import com.tarantini.lcbo.domain.gateway.Alkyhol;
+import com.tarantini.lcbo.domain.gateway.LinkResponse;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import org.springframework.hateoas.ResourceSupport;
 
 import java.util.List;
 
@@ -13,6 +13,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-class ProductsResponse extends ResourceSupport {
-    private List<Product> products;
+class AlkyholsResponse extends LinkResponse {
+    private List<Alkyhol> alkyhols;
 }

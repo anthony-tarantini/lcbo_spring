@@ -1,4 +1,4 @@
-package com.tarantini.lcbo.products;
+package com.tarantini.lcbo.alkyhols;
 
 import com.tarantini.lcbo.domain.lcbo.LcboProduct;
 import com.tarantini.lcbo.domain.lcbo.LcboResponse;
@@ -19,15 +19,15 @@ import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 
-public class ProductsClientTest {
-    private ProductsClient mProductsClient;
+public class AlkyholsClientTest {
+    private AlkyholsClient mAlkyholsClient;
     @Mock
     private RestTemplate mRestTemplate;
 
     @Before
     public void setup() {
         initMocks(this);
-        mProductsClient = new ProductsClient(mRestTemplate);
+        mAlkyholsClient = new AlkyholsClient(mRestTemplate);
     }
 
     @Test
@@ -38,7 +38,7 @@ public class ProductsClientTest {
         doReturn(responseEntity).when(mRestTemplate)
                 .exchange(anyString(), any(HttpMethod.class), any(HttpEntity.class), any(ParameterizedTypeReference.class), anyInt());
 
-        final LcboResponse<List<LcboProduct>> products = mProductsClient.getProducts(1);
+        final LcboResponse<List<LcboProduct>> products = mAlkyholsClient.getProducts(1);
 
         final ParameterizedTypeReference<LcboResponse<List<LcboProduct>>> responseType = new ParameterizedTypeReference<LcboResponse<List<LcboProduct>>>() {
         };
@@ -56,7 +56,7 @@ public class ProductsClientTest {
         doReturn(responseEntity).when(mRestTemplate)
                 .exchange(anyString(), any(HttpMethod.class), any(HttpEntity.class), any(ParameterizedTypeReference.class), anyInt());
 
-        final LcboProduct product = mProductsClient.getProductById(1);
+        final LcboProduct product = mAlkyholsClient.getProductById(1);
 
         final ParameterizedTypeReference<LcboResponse<LcboProduct>> responseType = new ParameterizedTypeReference<LcboResponse<LcboProduct>>() {
         };

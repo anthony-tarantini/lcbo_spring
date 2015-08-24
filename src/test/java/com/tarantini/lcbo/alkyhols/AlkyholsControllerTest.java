@@ -1,4 +1,4 @@
-package com.tarantini.lcbo.products;
+package com.tarantini.lcbo.alkyhols;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -24,56 +24,56 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = MockServletContext.class)
 @WebAppConfiguration
-public class ProductsControllerTest {
-    private ProductsController mProductsController;
+public class AlkyholsControllerTest {
+    private AlkyholsController mAlkyholsController;
     @Mock
-    private ProductsService mProductsService;
+    private AlkyholsService mAlkyholsService;
 
     @Before
     public void setup() {
         initMocks(this);
-        mProductsController = new ProductsController(mProductsService);
+        mAlkyholsController = new AlkyholsController(mAlkyholsService);
     }
 
     @Test
-    public void requestMapping_getProducts() throws Exception {
-        doReturn(new ProductsResponse()).when(mProductsService).getProducts(anyInt());
+    public void requestMapping_getAlkyhols() throws Exception {
+        doReturn(new AlkyholsResponse()).when(mAlkyholsService).getAllAlkyhols(anyInt());
 
-        final MockMvc mockMvc = MockMvcBuilders.standaloneSetup(mProductsController).build();
-        mockMvc.perform(MockMvcRequestBuilders.get("/products").accept(MediaType.APPLICATION_JSON))
+        final MockMvc mockMvc = MockMvcBuilders.standaloneSetup(mAlkyholsController).build();
+        mockMvc.perform(MockMvcRequestBuilders.get("/alkyhols").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
 
     @Test
-    public void getProducts_passesThroughToService() {
-        final ProductsResponse expected = new ProductsResponse();
-        doReturn(expected).when(mProductsService).getProducts(anyInt());
+    public void getAlkyhols_passesThroughToService() {
+        final AlkyholsResponse expected = new AlkyholsResponse();
+        doReturn(expected).when(mAlkyholsService).getAllAlkyhols(anyInt());
 
-        final ProductsResponse response = mProductsController.getProducts(1);
+        final AlkyholsResponse response = mAlkyholsController.getAllAlkyhols(1);
 
-        verify(mProductsService).getProducts(1);
+        verify(mAlkyholsService).getAllAlkyhols(1);
         assertThat(response).isSameAs(expected);
     }
 
     @Test
-    public void requestMapping_getProduct() throws Exception {
-        doReturn(new ProductResponse()).when(mProductsService).getProductById(anyInt());
+    public void requestMapping_getAlkyhol() throws Exception {
+        doReturn(new AlkyholResponse()).when(mAlkyholsService).getAlkyholById(anyInt());
 
-        final MockMvc mockMvc = MockMvcBuilders.standaloneSetup(mProductsController).build();
-        mockMvc.perform(MockMvcRequestBuilders.get("/products/123").accept(MediaType.APPLICATION_JSON))
+        final MockMvc mockMvc = MockMvcBuilders.standaloneSetup(mAlkyholsController).build();
+        mockMvc.perform(MockMvcRequestBuilders.get("/alkyhols/123").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
 
     @Test
-    public void getProductById_passesThroughToService() {
-        final ProductResponse expected = new ProductResponse();
-        doReturn(expected).when(mProductsService).getProductById(anyInt());
+    public void getAlkyholById_passesThroughToService() {
+        final AlkyholResponse expected = new AlkyholResponse();
+        doReturn(expected).when(mAlkyholsService).getAlkyholById(anyInt());
 
-        final ProductResponse response = mProductsController.getProductById(1);
+        final AlkyholResponse response = mAlkyholsController.getAlkyholById(1);
 
-        verify(mProductsService).getProductById(1);
+        verify(mAlkyholsService).getAlkyholById(1);
         assertThat(response).isSameAs(expected);
     }
 }

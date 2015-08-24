@@ -1,8 +1,8 @@
-package com.tarantini.lcbo.products;
+package com.tarantini.lcbo.alkyhols;
 
+import com.tarantini.lcbo.domain.gateway.Alkyhol;
 import com.tarantini.lcbo.domain.gateway.Container;
 import com.tarantini.lcbo.domain.gateway.Image;
-import com.tarantini.lcbo.domain.gateway.Product;
 import com.tarantini.lcbo.domain.lcbo.LcboPager;
 import com.tarantini.lcbo.domain.lcbo.LcboProduct;
 import com.tarantini.lcbo.domain.lcbo.LcboResponse;
@@ -10,7 +10,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -20,17 +19,17 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
 
-public class ProductsServiceTest {
-    private ProductsService mProductsService;
+public class AlkyholsServiceTest {
+    private AlkyholsService mAlkyholsService;
     @Mock
-    private ProductsClient mProductsClient;
+    private AlkyholsClient mAlkyholsClient;
     @Mock
-    private ProductsLinker mProductsLinker;
+    private AlkyholsLinker mAlkyholsLinker;
 
     @Before
     public void setup() {
         initMocks(this);
-        mProductsService = new ProductsService(mProductsClient, mProductsLinker);
+        mAlkyholsService = new AlkyholsService(mAlkyholsClient, mAlkyholsLinker);
     }
 
     @Test
@@ -43,47 +42,47 @@ public class ProductsServiceTest {
         lcboPager.setCurrentPage(1);
         lcboPager.setNextPage(2);
         response.setLcboPager(lcboPager);
-        doReturn(response).when(mProductsClient).getProducts(anyInt());
+        doReturn(response).when(mAlkyholsClient).getProducts(anyInt());
 
-        final ProductsResponse productsResponse = mProductsService.getProducts(1);
+        final AlkyholsResponse alkyholsResponse = mAlkyholsService.getAllAlkyhols(1);
 
-        verify(mProductsClient).getProducts(1);
-        verify(mProductsLinker).addPagerLinks(productsResponse, lcboPager);
-        final Product productOne = productsResponse.getProducts().get(0);
-        assertThat(productOne.getId()).isEqualTo(1);
-        assertThat(productOne.getName()).isEqualTo("Blue");
-        assertThat(productOne.getPrice()).isEqualTo("$4.46");
-        assertThat(productOne.getCategory()).isEqualTo("Beer");
-        assertThat(productOne.getOrigin()).isEqualTo("Canada");
-        assertThat(productOne.getAlcoholContent()).isEqualTo("5.1%");
-        assertThat(productOne.getProducer()).isEqualTo("Labbatt");
-        assertThat(productOne.getImage()).isEqualTo(
+        verify(mAlkyholsClient).getProducts(1);
+        verify(mAlkyholsLinker).addPagerLinks(alkyholsResponse, lcboPager);
+        final Alkyhol alkyhol = alkyholsResponse.getAlkyhols().get(0);
+        assertThat(alkyhol.getId()).isEqualTo(1);
+        assertThat(alkyhol.getName()).isEqualTo("Blue");
+        assertThat(alkyhol.getPrice()).isEqualTo("$4.46");
+        assertThat(alkyhol.getCategory()).isEqualTo("Beer");
+        assertThat(alkyhol.getOrigin()).isEqualTo("Canada");
+        assertThat(alkyhol.getAlcoholContent()).isEqualTo("5.1%");
+        assertThat(alkyhol.getProducer()).isEqualTo("Labbatt");
+        assertThat(alkyhol.getImage()).isEqualTo(
                 Image.builder().full("imageFull").thumb("imageThumb").build()
         );
-        assertThat(productOne.getContainer()).isEqualTo(
+        assertThat(alkyhol.getContainer()).isEqualTo(
                 Container.builder().volume("1.20 L").type("Can").units(6).build()
         );
     }
 
     @Test
     public void getProduct() {
-        doReturn(createLcboProduct(1)).when(mProductsClient).getProductById(anyInt());
+        doReturn(createLcboProduct(1)).when(mAlkyholsClient).getProductById(anyInt());
 
-        final ProductResponse productResponse = mProductsService.getProductById(1);
+        final AlkyholResponse alkyholResponse = mAlkyholsService.getAlkyholById(1);
 
-        verify(mProductsClient).getProductById(1);
-        final Product productOne = productResponse.getProduct();
-        assertThat(productOne.getId()).isEqualTo(1);
-        assertThat(productOne.getName()).isEqualTo("Blue");
-        assertThat(productOne.getPrice()).isEqualTo("$4.46");
-        assertThat(productOne.getCategory()).isEqualTo("Beer");
-        assertThat(productOne.getOrigin()).isEqualTo("Canada");
-        assertThat(productOne.getAlcoholContent()).isEqualTo("5.1%");
-        assertThat(productOne.getProducer()).isEqualTo("Labbatt");
-        assertThat(productOne.getImage()).isEqualTo(
+        verify(mAlkyholsClient).getProductById(1);
+        final Alkyhol alkyhol = alkyholResponse.getAlkyhol();
+        assertThat(alkyhol.getId()).isEqualTo(1);
+        assertThat(alkyhol.getName()).isEqualTo("Blue");
+        assertThat(alkyhol.getPrice()).isEqualTo("$4.46");
+        assertThat(alkyhol.getCategory()).isEqualTo("Beer");
+        assertThat(alkyhol.getOrigin()).isEqualTo("Canada");
+        assertThat(alkyhol.getAlcoholContent()).isEqualTo("5.1%");
+        assertThat(alkyhol.getProducer()).isEqualTo("Labbatt");
+        assertThat(alkyhol.getImage()).isEqualTo(
                 Image.builder().full("imageFull").thumb("imageThumb").build()
         );
-        assertThat(productOne.getContainer()).isEqualTo(
+        assertThat(alkyhol.getContainer()).isEqualTo(
                 Container.builder().volume("1.20 L").type("Can").units(6).build()
         );
     }

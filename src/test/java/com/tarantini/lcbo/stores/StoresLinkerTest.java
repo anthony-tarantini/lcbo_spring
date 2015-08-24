@@ -1,5 +1,7 @@
 package com.tarantini.lcbo.stores;
 
+import com.tarantini.lcbo.domain.gateway.Link;
+import com.tarantini.lcbo.domain.gateway.LinkResponse;
 import org.junit.Test;
 import org.springframework.hateoas.ResourceSupport;
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -20,9 +22,9 @@ public class StoresLinkerTest {
 
         final StoresLinker storesLinker = new StoresLinker();
 
-        final ResourceSupport response = mock(ResourceSupport.class);
+        final LinkResponse response = mock(LinkResponse.class);
         storesLinker.createLinkToPage(response, 1, "test");
 
-        verify(response).add(linkTo(methodOn(StoresController.class).getStores(1)).withRel("test"));
+        verify(response).addLink(new Link("test", "/stores/page=1"));
     }
 }

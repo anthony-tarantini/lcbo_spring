@@ -1,4 +1,4 @@
-package com.tarantini.lcbo.products;
+package com.tarantini.lcbo.alkyhols;
 
 import com.tarantini.lcbo.domain.lcbo.LcboProduct;
 import com.tarantini.lcbo.domain.lcbo.LcboResponse;
@@ -13,11 +13,11 @@ import org.springframework.web.client.RestTemplate;
 import java.util.List;
 
 @Component
-class ProductsClient {
+class AlkyholsClient {
     private final RestTemplate mRestTemplate;
 
     @Autowired
-    public ProductsClient(final RestTemplate restTemplate) {
+    public AlkyholsClient(final RestTemplate restTemplate) {
         mRestTemplate = restTemplate;
     }
 
